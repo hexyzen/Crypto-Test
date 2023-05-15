@@ -1,0 +1,237 @@
+﻿<Page x:Class="CryptoAppWpf.Views.DetailsWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CryptoAppWpf.Views"
+      mc:Ignorable="d" 
+      Background="#121212"
+      d:DesignHeight="450" d:DesignWidth="800" 
+      Title="Details">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="118"/>
+            <ColumnDefinition Width="119"/>
+            <ColumnDefinition Width="243"/>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="160"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="98"/>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="75"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="label_name" Content="{Binding SelectedCoin.name}" Grid.Column="0" Foreground="#FFFF"  Grid.Row="1" FontStretch="Normal" FontSize="24" Grid.ColumnSpan="2" Margin="10,14,0,0" />
+        <Label x:Name="label_symbol" Content="{Binding SelectedCoin.symbol}" Grid.Column="1" Foreground="#FFFF" HorizontalAlignment="Left"  Grid.Row="1" FontStretch="Normal" FontSize="24" Margin="0,14,0,0" Width="53" />
+        <Label x:Name="label_price" Content="{Binding SelectedCoin.market_data.current_price.usd}" ContentStringFormat=" {0} USD" Grid.Column="0"  Foreground="#FFFF" Grid.Row="2" FontStretch="Normal" FontSize="24" Grid.ColumnSpan="2" Margin="10,0,49,25" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <Label x:Name="label_price_change" Content="{Binding SelectedCoin.market_data.price_change_percentage_24h, StringFormat='\{0\}%'}" Grid.Column="1"  Foreground="#FFFF" Grid.Row="2"  FontStretch="Normal" FontSize="16" Grid.ColumnSpan="1" Margin="30,0,19,27" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+        <Label x:Name="label_rank" Content="{Binding SelectedCoin.market_cap_rank}" ContentStringFormat="Rank #{0}" Foreground="#e9e9ee" FontStretch="Normal" FontSize="14" Margin="10,86,30,38" Grid.RowSpan="2" />
+        <TextBox x:Name="textbox_search" Text="bitcoin" Grid.Column="2" Background="#2f2f2f" HorizontalAlignment="Left"   TextWrapping="Wrap"  Width="211" Height="40"  Margin="22,29,0,29" FontSize="16" BorderThickness="0,0,0,0" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="White"  />
+        <Button Content="{DynamicResource StrSearch}" Foreground="White"  FontSize ="14" FontWeight="Medium" Grid.Column="3" HorizontalAlignment="Left" Height="34" VerticalAlignment="Center" Width="102" Click="ButtonSearchClick" Margin="10,0,0,0">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="TextElement.FontFamily" Value="Google Sans"/>
+                    <Setter Property="Background" Value="#000000"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#252525"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="100" Height="25" 
+                            CornerRadius="12" Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Grid x:Name="Capitalization" Grid.Column="1" Grid.Row="4"  Grid.ColumnSpan="4" Margin="118,7,15,34" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="147"/>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="116"/>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="72*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="{DynamicResource StrMarketCap}"  Foreground="#9e9d9b" Grid.Column="0" VerticalAlignment="Center" FontSize="13" Height="30"/>
+            <Label Content="{DynamicResource StrTradingvol}" Foreground="#9e9d9b" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="13" Height="30"/>
+            <Label Content="{DynamicResource StrValuation}" Foreground="#9e9d9b" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="13" Height="30" Margin="0,0,2,0"/>
+            <Label Content="{DynamicResource StrCircsupl}" Foreground="#9e9d9b" Grid.Column="2" VerticalAlignment="Center" FontSize="13" Height="30" Grid.ColumnSpan="2"/>
+            <Label Content="{DynamicResource StrTotalsupl}" Foreground="#9e9d9b" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" FontSize="13" Height="30" Grid.ColumnSpan="2"/>
+            <Label Content="{DynamicResource StrMaxsupl}" Foreground="#9e9d9b" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" FontSize="13" Height="30" Grid.ColumnSpan="2"/>
+
+            <Label x:Name="label_market_cap" Content="{Binding SelectedCoin.market_data.market_cap.usd}" ContentStringFormat="C1" Foreground="#FFFF" Grid.Column="1" VerticalAlignment="Center" FontSize="13" Height="30"/>
+            <Label x:Name="label_trading_vol" Content="{Binding SelectedCoin.market_data.total_volume.usd}" ContentStringFormat="C1" Foreground="#FFFF" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" FontSize="13" Height="30"/>
+            <Label x:Name="label_diluted_val" Content="{Binding SelectedCoin.market_data.fully_diluted_valuation.usd}" ContentStringFormat="N1" Foreground="#FFFF" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontSize="13" Height="30"/>
+            <Label x:Name="label_circ_supl" Content="{Binding SelectedCoin.market_data.circulating_supply}" ContentStringFormat="N1" Foreground="#FFFF" Grid.Column="4" VerticalAlignment="Center" FontSize="13" Height="30" Grid.ColumnSpan="3"/>
+            <Label x:Name="label_total_supl" Content="{Binding SelectedCoin.market_data.total_supply}" ContentStringFormat="N1" Foreground="#FFFF" Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" FontSize="13" Height="30" Grid.ColumnSpan="3"/>
+            <Label x:Name="label_max_supl" Content="{Binding SelectedCoin.market_data.max_supply}" ContentStringFormat="N1" Foreground="#FFFF" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" FontSize="13" Height="30" Grid.ColumnSpan="3"/>
+        </Grid>
+
+        <Grid x:Name="Exchanges" Grid.Row="2"   Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="15,55,0,34" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="57*"/>
+                <ColumnDefinition Width="97*"/>
+                <ColumnDefinition Width="9*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label x:Name="label_market0" Foreground="#9e9d9b" Grid.Column="0" VerticalAlignment="Center" FontSize="14" Height="30" Grid.ColumnSpan="4"/>
+            <Label x:Name="label_market1" Foreground="#9e9d9b" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="14" Height="30" Grid.ColumnSpan="4"/>
+            <Label x:Name="label_market2" Foreground="#9e9d9b" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="14" Height="30" Grid.ColumnSpan="4"/>
+            <Label x:Name="label_market3" Foreground="#9e9d9b" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontSize="14" Height="30" Grid.ColumnSpan="4"/>
+            <Label x:Name="label_market4" Foreground="#9e9d9b" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" FontSize="14" Height="32" Grid.ColumnSpan="4"/>
+        </Grid>
+
+        <Grid x:Name="GridInfo" Grid.Column="3" HorizontalAlignment="Left" Height="172" VerticalAlignment="Top" Width="150" Grid.RowSpan="4" Grid.ColumnSpan="2" Margin="90,97,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="{DynamicResource StrInfo}" Foreground="Gray"  VerticalAlignment="Top" FontSize="14" Height="27" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Grid.ColumnSpan="2" Margin="0,-7,0,0" HorizontalAlignment="Left" Width="150"/>
+            <Label Content="{DynamicResource StrWebsite}" Foreground="#9e9d9b" VerticalAlignment="Center" FontSize="11" Height="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" HorizontalAlignment="Left"/>
+            <Label Content="{DynamicResource StrMarket}" Foreground="#9e9d9b" VerticalAlignment="Center" FontSize="11" Height="38" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Row="2" HorizontalAlignment="Left" Width="50"/>
+            <Label Content="{DynamicResource StrForum}" Foreground="#9e9d9b" VerticalAlignment="Center" FontSize="11" Height="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" HorizontalAlignment="Left"/>
+            <Button x:Name="buttonHomepage"  Foreground="#9e9d9b" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" FontSize="11">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Google Sans"/>
+                        <Setter Property="Background" Value="#000000"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#252525"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border  Height="25" Width="90"
+                            CornerRadius="6" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button Content="coingecko.com" Foreground="#9e9d9b" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="buttonGeckoClick" BorderThickness="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="11">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Google Sans"/>
+                        <Setter Property="Background" Value="#000000"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#252525"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border  Height="25" Width="90"
+                            CornerRadius="6" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="buttonForum"  Foreground="#9e9d9b" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" FontSize="11">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Google Sans"/>
+                        <Setter Property="Background" Value="#000000"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#252525"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border  Height="25" Width="90"
+                            CornerRadius="6" Background="{TemplateBinding Background}">
+
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <TextBox x:Name="textbox_result" Grid.Column="2" BorderThickness="0,0,0,0" Background="#393939" Foreground="#e3e3e3"  HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Width="136" Height="26" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Margin="187,0,0,0"/>
+        <TextBox x:Name="textbox_mul" Background="#393939" BorderThickness="0,0,0,0" Foreground="#e3e3e3" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="2" Text="10" TextWrapping="Wrap" VerticalAlignment="Center" Width="136" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="5,0,0,0"/>
+        <Button x:Name="buttonConvert" Content="{DynamicResource StrConvert}" Foreground="White" Grid.Column="2" HorizontalAlignment="Left" Margin="111,0,0,0" Grid.Row="3" VerticalAlignment="Top" Height="28" Width="104" Click="ButtonConvertClick">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="TextElement.FontFamily" Value="Google Sans"/>
+                    <Setter Property="Background" Value="#000000"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#252525"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="100" Height="25" 
+                            CornerRadius="12" Background="{TemplateBinding Background}">
+
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Label x:Name="label_convert" Foreground="#e3e1da" Grid.Column="1" HorizontalAlignment="Left" Margin="81,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="24" Width="38"/>
+        <TextBox x:Name="textbox_convert" BorderThickness="0,0,0,0"  Background="#393939" Foreground="#ffff" Grid.Column="2" HorizontalAlignment="Left" Margin="214,26,0,0" Grid.Row="1" Text="ethereum" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" Height="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Label x:Name="label_error" HorizontalAlignment="Left" Margin="108,0,0,0" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="34" Width="129"/>
+        <ToggleButton x:Name = "button_Translate" Foreground="White" Background="#252525" Content="EN"  Checked = "HandleCheckUA" Unchecked = "HandleUncheckedEN" BorderThickness="0 0 0 0"
+         Width = "32" HorizontalAlignment = "Center" IsChecked="{Binding IsCheckedState}" Focusable="False" RenderTransformOrigin="0,0" ForceCursor="True" HorizontalContentAlignment="Center" VerticalAlignment="Center" Padding="0,0,0,0" Panel.ZIndex="-2"/>
+        <Frame x:Name="frame_OnTop" NavigationUIVisibility="Hidden" Visibility="Visible" Background="#252525" Grid.ColumnSpan="5" HorizontalAlignment="Left" Height="364" Margin="0,86,0,0" Grid.RowSpan="6" VerticalAlignment="Top" Width="800"/>
+    </Grid>
+
+</Page>
